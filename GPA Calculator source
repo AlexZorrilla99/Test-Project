@@ -1,0 +1,80 @@
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        //Total points / total creditsString (formula for GPA)
+        //points for a class = grade value * creditsString
+        //A = 4, B = 3 ...
+        Scanner scanner = new Scanner(System.in);
+        int totalPoints = 0;
+        int totalCredits = 0;
+        boolean moreClasses = false;
+        do {
+
+
+            int credits = 0;
+            boolean validCredits = true;
+            do {
+                validCredits = true;
+                System.out.println("Enter number of credits: ");
+                String creditsString = scanner.nextLine();
+                try {
+                    credits = Integer.parseInt(creditsString);
+
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Enter a valid integer.");
+                    validCredits = false;
+                }
+            }
+            while (!validCredits);
+
+
+            boolean validGrade = true;
+
+            int gradeValue = 0;
+            String grade = "";
+            do {
+                validGrade = true;
+                System.out.println("Enter Grade: ");
+                grade = scanner.nextLine();
+                if (grade.equalsIgnoreCase("A")) {
+                    gradeValue = 4;
+                } else if (grade.equalsIgnoreCase("B")) {
+                    gradeValue = 3;
+                } else if (grade.equalsIgnoreCase("C")) {
+                    gradeValue = 2;
+                } else if (grade.equalsIgnoreCase("D")) {
+                    gradeValue = 1;
+                } else if (grade.equalsIgnoreCase("F")) {
+                    gradeValue = 0;
+                } else {
+                    System.out.println("No Valid Grade entered.");
+                    validGrade = false;
+                }
+            }
+            while (!validGrade);
+
+            int points = gradeValue * credits;
+
+            totalPoints += points;
+            totalCredits += credits;
+
+            System.out.println("Would you like to add another class?(Y/N)");
+           String moreClassesString = scanner.nextLine();
+           moreClasses = moreClassesString.equalsIgnoreCase("y");
+
+        }
+        while (moreClasses);
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        double GPA = (1.0 * totalPoints / totalCredits);
+
+
+        System.out.println("Total number of credits: " + totalCredits);
+        System.out.println("Points: " + totalPoints);
+        System.out.println("CUM GPA: " + df.format(GPA));
+
+    }//end main method
+}//end main class
